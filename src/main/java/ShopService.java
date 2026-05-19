@@ -5,6 +5,11 @@ import java.util.UUID;
 public class ShopService {
     private ProductRepo productRepo = new ProductRepo();
     private OrderRepo orderRepo = new OrderMapRepo();
+    private OrderStatus orderStatus;
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
     public Order addOrder(List<String> productIds) {
         List<Product> products = new ArrayList<>();
@@ -17,7 +22,7 @@ public class ShopService {
             products.add(productToOrder);
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), products);
+        Order newOrder = new Order(UUID.randomUUID().toString(), this.orderStatus, products);
 
         return orderRepo.addOrder(newOrder);
     }
